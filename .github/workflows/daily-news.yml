@@ -6,6 +6,9 @@ on:
     - cron: '0 22 * * *'  # UTC 22:00 = Vancouver 3:00 PM (PDT)
   workflow_dispatch:        # 手动触发
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
