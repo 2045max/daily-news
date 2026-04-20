@@ -21,6 +21,9 @@ jobs:
 
       - run: npm ci
 
+      - name: Install edge-tts
+        run: pip install edge-tts
+
       - name: Run daily-news
         run: npx tsx daily-news.ts --email
         env:
