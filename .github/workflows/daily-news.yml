@@ -1,0 +1,33 @@
+name: Daily News
+
+on:
+  schedule:
+    - cron: '0 14 * * *'  # UTC 14:00 = Vancouver 7:00 AM (PDT)
+    - cron: '0 22 * * *'  # UTC 22:00 = Vancouver 3:00 PM (PDT)
+  workflow_dispatch:        # 手动触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci
+
+      - name: Run daily-news
+        run: npx tsx daily-news.ts --email
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          EMAIL_TO: 2045maxyang@gmail.com
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./output
+          keep_files: true  # 保留历史日期文件

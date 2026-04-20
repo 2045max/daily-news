@@ -7,7 +7,7 @@
   "scripts": {
     "news": "tsx daily-news.ts",
     "news:raw": "tsx daily-news.ts --no-ai",
-    "news:email": "tsx daily-news.ts --email"
+    "news:local": "tsx daily-news.ts --no-email"
   },
   "keywords": [],
   "author": "",
