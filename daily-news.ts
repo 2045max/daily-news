@@ -281,12 +281,31 @@ async function main() {
   // ── Email ──
   if (SEND_EMAIL && process.env.RESEND_API_KEY && process.env.EMAIL_TO) {
     const resend = new Resend(process.env.RESEND_API_KEY)
+    const PAGES_URL = 'https://2045max.github.io/daily-news'
+    // Email-friendly version: replace <audio> with prominent clickable buttons
+    const emailHtml = dailyHtml.replace(
+      /<div class="audio-player">[\s\S]*?<\/div>/,
+      `<div style="background:#f0f4f8;border-radius:8px;padding:20px;margin-bottom:24px;text-align:center;">
+        <p style="margin:0 0 12px 0;font-size:1.1em;font-weight:600;">🔊 语音播报 / Audio Briefing</p>
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;">
+          <tr>
+            <td style="padding:0 8px;">
+              <a href="${PAGES_URL}/${today}-en.mp3" style="display:inline-block;background:#0969da;color:#ffffff;text-decoration:none;padding:10px 24px;border-radius:6px;font-size:0.95em;font-weight:500;">▶ English</a>
+            </td>
+            <td style="padding:0 8px;">
+              <a href="${PAGES_URL}/${today}-zh.mp3" style="display:inline-block;background:#0969da;color:#ffffff;text-decoration:none;padding:10px 24px;border-radius:6px;font-size:0.95em;font-weight:500;">▶ 中文版</a>
+            </td>
+          </tr>
+        </table>
+        <p style="margin:12px 0 0 0;font-size:0.85em;color:#666;">点击按钮收听语音播报，或访问 <a href="${PAGES_URL}/" style="color:#0969da;text-decoration:underline;">网页版</a> 在线播放</p>
+      </div>`
+    )
     try {
       await resend.emails.send({
         from: 'Daily News <onboarding@resend.dev>',
         to: process.env.EMAIL_TO,
         subject: `📰 Daily News — ${today}`,
-        html: dailyHtml,
+        html: emailHtml,
       })
       console.log(chalk.green(`📧 邮件已发送到 ${process.env.EMAIL_TO}`))
     } catch (e: any) {
