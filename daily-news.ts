@@ -11,6 +11,7 @@ import { execSync } from 'child_process'
 const NO_AI = process.argv.includes('--no-ai')
 const NO_EMAIL = process.argv.includes('--no-email')
 const NO_AUDIO = process.argv.includes('--no-audio')
+const BRIEF = process.argv.includes('--brief')  // 8am short edition
 const SEND_EMAIL = !NO_EMAIL
 const parser = new Parser()
 const ai = new OpenAI({
@@ -18,17 +19,20 @@ const ai = new OpenAI({
   baseURL: 'https://api.deepseek.com',
 })
 
-const FEEDS = {
-  '🔥 Hacker News': 'https://hnrss.org/frontpage?count=10',
-  '🐙 GitHub Trending': 'https://mshibanami.github.io/GitHubTrendingRSS/daily/all.xml',
-  '📈 Tech/AI Stocks': 'https://feeds.finance.yahoo.com/rss/2.0/headline?s=NVDA,MSFT,GOOGL,META,AMZN,AMD,AVGO,TSM,PLTR,SMCI&region=US&lang=en-US',
-}
+// ── Mode: brief (8am 10-15min) vs full (3pm 30-40min) ──
+const MODE = BRIEF
+  ? { label: '☀️ Morning Brief', countSmall: 5, countBig: 8, summaryWords: '20-30词', summaryChars: '20-30字', maxTokens: 1000 }
+  : { label: '🌙 Full Edition', countSmall: 10, countBig: 20, summaryWords: '40-60词', summaryChars: '40-80字', maxTokens: 3000 }
 
-const COLORS: Record<string, (s: string) => string> = {
-  '🔥 Hacker News': chalk.hex('#FF6600'),
-  '🐙 GitHub Trending': chalk.green,
-  '📈 Tech/AI Stocks': chalk.cyan,
-}
+// ── Feeds with per-mode counts ──
+// HuggingFace + arXiv = ~30% of total content
+const FEEDS: { name: string; url: string; color: (s: string) => string; count: number }[] = [
+  { name: '🔥 Hacker News',    url: 'https://hnrss.org/frontpage',                                                                      color: chalk.hex('#FF6600'), count: MODE.countSmall },
+  { name: '🐙 GitHub Trending', url: 'https://mshibanami.github.io/GitHubTrendingRSS/daily/all.xml',                                    color: chalk.green,          count: MODE.countSmall },
+  { name: '📈 Tech/AI Stocks',  url: 'https://feeds.finance.yahoo.com/rss/2.0/headline?s=NVDA,MSFT,GOOGL,META,AMZN,AMD,AVGO,TSM,PLTR,SMCI&region=US&lang=en-US', color: chalk.cyan, count: MODE.countSmall },
+  { name: '🤗 HuggingFace',     url: 'https://huggingface.co/blog/feed.xml',                                                            color: chalk.magenta,        count: MODE.countBig },
+  { name: '📄 arXiv AI',        url: 'http://export.arxiv.org/rss/cs.AI',                                                               color: chalk.yellow,         count: MODE.countBig },
+]
 
 // ── Paths ──
 const __dirname = new URL('.', import.meta.url).pathname
@@ -37,10 +41,10 @@ const OUTPUT_DIR = join(__dirname, 'output')
 // ── Fetch RSS ──
 interface NewsItem { title: string; link: string; date?: string }
 
-async function fetchFeed(url: string): Promise<NewsItem[]> {
+async function fetchFeed(url: string, count: number): Promise<NewsItem[]> {
   const feed = await parser.parseURL(url)
-  return (feed.items || []).slice(0, 10).map(item => ({
-    title: item.title || 'No title',
+  return (feed.items || []).slice(0, count).map(item => ({
+    title: (item.title || 'No title').replace(/<[^>]*>/g, '').trim(),
     link: item.link || '',
     date: item.pubDate,
   }))
@@ -56,11 +60,11 @@ async function summarize(category: string, items: NewsItem[]): Promise<string[]>
     const res = await ai.chat.completions.create({
       model: 'deepseek-chat',
       messages: [
-        { role: 'system', content: '你是新闻摘要助手。对每条新闻给出中英双语概要，格式：\n编号. 英文概要(30-50词) | 中文概要(30-50字)\n每行一条，不要多余内容。' },
+        { role: 'system', content: `你是新闻摘要助手。对每条新闻给出中英双语概要，格式：\n编号. 英文概要(${MODE.summaryWords}) | 中文概要(${MODE.summaryChars})\n每行一条，不要多余内容。` },
         { role: 'user', content: `分类：${category}\n\n${titles}` },
       ],
       temperature: 0.3,
-      max_tokens: 1500,
+      max_tokens: MODE.maxTokens,
     })
     const lines = (res.choices[0]?.message?.content || '').trim().split('\n').filter(l => l.trim())
     return items.map((_, i) => {
@@ -97,6 +101,7 @@ function buildPageHtml(title: string, date: string, sections: Section[], navHtml
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 750px; margin: 0 auto; padding: 20px; color: #1a1a1a; line-height: 1.8; background: #fafafa; }
   header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 12px; margin-bottom: 20px; }
   h1 { margin: 0; font-size: 1.5em; }
+  .mode-badge { display: inline-block; font-size: 0.7em; padding: 2px 10px; border-radius: 12px; background: #e8f0fe; color: #0969da; margin-left: 10px; vertical-align: middle; }
   nav a { margin-left: 12px; color: #0969da; text-decoration: none; font-size: 0.9em; }
   nav a:hover { text-decoration: underline; }
   h2 { margin-top: 32px; padding-bottom: 6px; border-bottom: 1px solid #eee; }
@@ -114,7 +119,7 @@ function buildPageHtml(title: string, date: string, sections: Section[], navHtml
 </head>
 <body>
 <header>
-  <h1>📰 ${title}</h1>
+  <h1>📰 ${title}<span class="mode-badge">${BRIEF ? 'Brief' : 'Full'}</span></h1>
   <nav>${navHtml}</nav>
 </header>
 ${audioDate ? `<div class="audio-player">
@@ -123,7 +128,7 @@ ${audioDate ? `<div class="audio-player">
   <p><strong>中文:</strong> <audio controls src="${audioDate}-zh.mp3"></audio></p>
 </div>` : ''}
 ${sectionHtml}
-<footer>Generated by daily-news • ${date}</footer>
+<footer>Generated by daily-news • ${date} • ${MODE.label}</footer>
 </body>
 </html>`
 }
@@ -154,42 +159,41 @@ function buildArchiveHtml(dates: string[]): string {
 
 // ── Main ──
 async function main() {
-  console.log(chalk.bold('\n⏳ 拉取新闻中...\n'))
+  const suffix = BRIEF ? 'brief' : 'full'
+  console.log(chalk.bold(`\n⏳ ${MODE.label} 拉取新闻中...\n`))
 
   const today = new Date().toISOString().slice(0, 10)
   const sections: Section[] = []
   let totalNew = 0
 
-  for (const [category, url] of Object.entries(FEEDS)) {
-    const color = COLORS[category] || chalk.white
-    console.log(color(`━━ ${category} ━━━━━━━━━━━━━━━━━━━━━━━`))
+  for (const feed of FEEDS) {
+    const color = feed.color
+    console.log(color(`━━ ${feed.name} (${feed.count}条) ━━━━━━━━━━━━━━━━━━`))
 
     let items: NewsItem[]
     try {
-      items = await fetchFeed(url)
+      items = await fetchFeed(feed.url, feed.count)
     } catch (e: any) {
       console.log(chalk.red(`  ✗ 拉取失败: ${e.message}\n`))
-      sections.push({ category, items: [] })
+      sections.push({ category: feed.name, items: [] })
       continue
     }
 
-    const newItems = items
-
     // AI summarize
-    const summaries = await summarize(category, newItems)
+    const summaries = await summarize(feed.name, items)
 
     // terminal output
-    newItems.forEach((it, i) => {
+    items.forEach((it, i) => {
       console.log(`  ${color('•')} ${it.title}`)
       if (summaries[i]) console.log(chalk.dim(`    ${summaries[i]}`))
     })
     console.log()
 
     sections.push({
-      category,
-      items: newItems.map((it, i) => ({ title: it.title, link: it.link, summary: summaries[i] || '' }))
+      category: feed.name,
+      items: items.map((it, i) => ({ title: it.title, link: it.link, summary: summaries[i] || '' }))
     })
-    totalNew += newItems.length
+    totalNew += items.length
   }
 
   // ── Generate output ──
@@ -197,18 +201,17 @@ async function main() {
 
   const navHtml = `<a href="index.html">最新</a><a href="archive.html">归档</a>`
 
-  // (HTML generated after audio, see below)
-
-  // 3. Archive page
+  // Archive page
   const allDates = readdirSync(OUTPUT_DIR)
-    .filter(f => /^\d{4}-\d{2}-\d{2}\.html$/.test(f))
+    .filter(f => /^\d{4}-\d{2}-\d{2}(-brief|-full)?\.html$/.test(f))
+    .filter(f => f !== 'index.html' && f !== 'archive.html')
     .map(f => f.replace('.html', ''))
     .sort()
     .reverse()
   writeFileSync(join(OUTPUT_DIR, 'archive.html'), buildArchiveHtml(allDates))
 
-  // 4. Markdown (keep for reference)
-  const mdSections = [`# 📰 Daily News — ${today}\n`]
+  // Markdown
+  const mdSections = [`# 📰 Daily News — ${today} (${MODE.label})\n`]
   for (const s of sections) {
     if (s.items.length === 0) {
       mdSections.push(`## ${s.category}\n\n> 没有新内容\n`)
@@ -220,60 +223,67 @@ async function main() {
       mdSections.push(`## ${s.category}\n\n${lines.join('\n')}\n`)
     }
   }
-  writeFileSync(join(OUTPUT_DIR, `${today}.md`), mdSections.join('\n'))
+  writeFileSync(join(OUTPUT_DIR, `${today}-${suffix}.md`), mdSections.join('\n'))
 
-  // 5. Audio (English first, then Chinese) via Python edge-tts
+  // Audio via Python edge-tts
   let audioPath = ''
   if (!NO_AUDIO) {
     try {
       console.log(chalk.dim('  🔊 生成语音播报...'))
+      // English: titles + english summary part
       const enText = sections
         .filter(s => s.items.length > 0)
-        .map(s => `${s.category.replace(/[^\w\s]/g, '')}.\n${s.items.map(it => it.title).join('.\n')}`)
+        .map(s => {
+          const heading = s.category.replace(/[^\w\s]/g, '')
+          const lines = s.items.map(it => {
+            const enSummary = it.summary?.split('|')[0]?.trim()
+            return enSummary ? `${it.title}. ${enSummary}` : it.title
+          })
+          return `${heading}.\n${lines.join('.\n')}`
+        })
         .join('.\n\n')
+
+      // Chinese: chinese summary part
       const zhText = sections
         .filter(s => s.items.length > 0)
         .map(s => {
-          const zhLines = s.items.map(it => {
+          const heading = s.category.replace(/[^\w\s]/g, '')
+          const lines = s.items.map(it => {
             const zh = it.summary?.split('|')[1]?.trim()
-            return zh || it.title  // fallback to English title
+            return zh || it.title
           })
-          return `${s.category.replace(/[^\w\s]/g, '')}。\n${zhLines.join('。\n')}`
+          return `${heading}。\n${lines.join('。\n')}`
         })
         .join('。\n\n')
 
-      const enPath = join(OUTPUT_DIR, `${today}-en.mp3`)
-      const zhPath = join(OUTPUT_DIR, `${today}-zh.mp3`)
-
-      // Write temp text files then call edge-tts
+      const enPath = join(OUTPUT_DIR, `${today}-${suffix}-en.mp3`)
+      const zhPath = join(OUTPUT_DIR, `${today}-${suffix}-zh.mp3`)
       const enTmpFile = join(OUTPUT_DIR, '.tmp-en.txt')
       const zhTmpFile = join(OUTPUT_DIR, '.tmp-zh.txt')
       writeFileSync(enTmpFile, enText)
       writeFileSync(zhTmpFile, zhText)
 
-      execSync(`edge-tts --voice en-US-AriaNeural --file "${enTmpFile}" --write-media "${enPath}"`, { stdio: 'pipe' })
-      execSync(`edge-tts --voice zh-CN-XiaoxiaoNeural --file "${zhTmpFile}" --write-media "${zhPath}"`, { stdio: 'pipe' })
-
-      // cleanup tmp
+      // Slower rate for brief (clear listening), normal for full
+      const rate = BRIEF ? '-10%' : '+0%'
+      execSync(`edge-tts --voice en-US-AriaNeural --rate="${rate}" --file "${enTmpFile}" --write-media "${enPath}"`, { stdio: 'pipe' })
+      execSync(`edge-tts --voice zh-CN-XiaoxiaoNeural --rate="${rate}" --file "${zhTmpFile}" --write-media "${zhPath}"`, { stdio: 'pipe' })
       execSync(`rm -f "${enTmpFile}" "${zhTmpFile}"`)
 
-      audioPath = `${today}`
-      console.log(chalk.dim(`   🔊 英文: output/${today}-en.mp3`))
-      console.log(chalk.dim(`   🔊 中文: output/${today}-zh.mp3`))
+      audioPath = `${today}-${suffix}`
+      console.log(chalk.dim(`   🔊 英文: output/${today}-${suffix}-en.mp3`))
+      console.log(chalk.dim(`   🔊 中文: output/${today}-${suffix}-zh.mp3`))
     } catch (e: any) {
       console.log(chalk.yellow(`  ⚠ 语音生成失败: ${e.message}`))
     }
   }
 
-  // 1. Daily HTML (after audio so we can embed player)
+  // Daily HTML
   const dailyHtml = buildPageHtml(`Daily News — ${today}`, today, sections, navHtml, audioPath)
-  const dailyPath = join(OUTPUT_DIR, `${today}.html`)
+  const dailyPath = join(OUTPUT_DIR, `${today}-${suffix}.html`)
   writeFileSync(dailyPath, dailyHtml)
-
-  // 2. index.html (copy of today)
   writeFileSync(join(OUTPUT_DIR, 'index.html'), dailyHtml)
 
-  console.log(chalk.bold.green(`\n✅ 完成！${totalNew} 条新内容`))
+  console.log(chalk.bold.green(`\n✅ ${MODE.label} 完成！${totalNew} 条内容`))
   console.log(chalk.dim(`   HTML: ${dailyPath}`))
   console.log(chalk.dim(`   首页: output/index.html`))
   console.log(chalk.dim(`   归档: output/archive.html\n`))
@@ -282,7 +292,6 @@ async function main() {
   if (SEND_EMAIL && process.env.RESEND_API_KEY && process.env.EMAIL_TO) {
     const resend = new Resend(process.env.RESEND_API_KEY)
     const PAGES_URL = 'https://2045max.github.io/daily-news'
-    // Email-friendly version: replace <audio> with prominent clickable buttons
     const emailHtml = dailyHtml.replace(
       /<div class="audio-player">[\s\S]*?<\/div>/,
       `<div style="background:#f0f4f8;border-radius:8px;padding:20px;margin-bottom:24px;text-align:center;">
@@ -290,21 +299,21 @@ async function main() {
         <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;">
           <tr>
             <td style="padding:0 8px;">
-              <a href="${PAGES_URL}/${today}-en.mp3" style="display:inline-block;background:#0969da;color:#ffffff;text-decoration:none;padding:10px 24px;border-radius:6px;font-size:0.95em;font-weight:500;">▶ English</a>
+              <a href="${PAGES_URL}/${today}-${suffix}-en.mp3" style="display:inline-block;background:#0969da;color:#ffffff;text-decoration:none;padding:10px 24px;border-radius:6px;font-size:0.95em;font-weight:500;">▶ English</a>
             </td>
             <td style="padding:0 8px;">
-              <a href="${PAGES_URL}/${today}-zh.mp3" style="display:inline-block;background:#0969da;color:#ffffff;text-decoration:none;padding:10px 24px;border-radius:6px;font-size:0.95em;font-weight:500;">▶ 中文版</a>
+              <a href="${PAGES_URL}/${today}-${suffix}-zh.mp3" style="display:inline-block;background:#0969da;color:#ffffff;text-decoration:none;padding:10px 24px;border-radius:6px;font-size:0.95em;font-weight:500;">▶ 中文版</a>
             </td>
           </tr>
         </table>
-        <p style="margin:12px 0 0 0;font-size:0.85em;color:#666;">点击按钮收听语音播报，或访问 <a href="${PAGES_URL}/" style="color:#0969da;text-decoration:underline;">网页版</a> 在线播放</p>
+        <p style="margin:12px 0 0 0;font-size:0.85em;color:#666;">点击收听语音播报，或访问 <a href="${PAGES_URL}/" style="color:#0969da;text-decoration:underline;">网页版</a> 在线播放</p>
       </div>`
     )
     try {
       await resend.emails.send({
         from: 'Daily News <onboarding@resend.dev>',
         to: process.env.EMAIL_TO,
-        subject: `📰 Daily News — ${today}`,
+        subject: `📰 ${MODE.label} — ${today}`,
         html: emailHtml,
       })
       console.log(chalk.green(`📧 邮件已发送到 ${process.env.EMAIL_TO}`))

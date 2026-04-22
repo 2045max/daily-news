@@ -6,8 +6,9 @@
   "type": "module",
   "scripts": {
     "news": "tsx daily-news.ts",
+    "news:brief": "tsx daily-news.ts --brief",
     "news:raw": "tsx daily-news.ts --no-ai",
-    "news:local": "tsx daily-news.ts --no-email"
+    "news:local": "tsx daily-news.ts --no-email --no-audio"
   },
   "keywords": [],
   "author": "",
