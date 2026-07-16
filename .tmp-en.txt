@@ -1,0 +1,79 @@
+ Hacker News.
+My car's OTA update broke Android Auto, and it's a indictment of modern software. My car's OTA update broke Android Auto, highlighting modern software's fragility and user frustration..
+Show HN: Mojibake – a low-level Unicode library written in C. Mojibake is a low-level Unicode library in C, offering efficient text handling for developers..
+The Little Book of Reinforcement Learning. The Little Book of Reinforcement Learning provides a concise guide to RL concepts and algorithms..
+FIFA World Cup 2026 Data Portraits. FIFA World Cup 2026 Data Portraits visualize tournament data through artistic representations..
+Show HN: ReasonGate- An explainable gate that blocks LLM prompt injection. ReasonGate is an explainable gate that blocks LLM prompt injection, enhancing AI security..
+CVE-2026-25089: FortiSandbox unauthenticated command injection added to CISA KEV. CVE-2026-25089: FortiSandbox unauthenticated command injection added to CISA KEV, posing critical risk..
+'Likweli': A new monkey species discovered in the Congo Basin. 'Likweli': A new monkey species discovered in the Congo Basin, expanding primate biodiversity..
+Just Do Things. Just Do Things encourages action over procrastination, promoting productivity and mindset shift..
+Ring-Zero: Scaling Zero RL to a Trillion Parameters for Emergent Reasoning. Ring-Zero scales Zero RL to a trillion parameters for emergent reasoning in AI models..
+Mathematics of Data Science. Mathematics of Data Science covers key mathematical foundations for modern data analysis..
+
+ GitHub Trending.
+OpenCut-app/OpenCut. OpenCut-app/OpenCut: A new open-source video editing tool with AI features, enabling efficient cutting and effects..
+Nutlope/hallmark. Nutlope/hallmark: A tool for generating personalized greeting cards using AI, simplifying design and text creation..
+mattpocock/skills. mattpocock/skills: A curated list of TypeScript skills and best practices for developers to improve coding efficiency..
+moeru-ai/airi. moeru-ai/airi: An AI assistant framework for building conversational agents with customizable plugins..
+Dicklesworthstone/destructive_command_guard. Dicklesworthstone/destructive_command_guard: A security tool that prevents accidental execution of destructive commands in terminal..
+HKUDS/Vibe-Trading. HKUDS/Vibe-Trading: A trading strategy framework leveraging sentiment analysis from social media for stock predictions..
+openinterpreter/openinterpreter. openinterpreter/openinterpreter: An open-source interpreter allowing natural language to control computer operations..
+HKUDS/DeepTutor. HKUDS/DeepTutor: An AI tutoring system offering personalized learning paths and real-time feedback..
+HenryNdubuaku/maths-cs-ai-compendium. HenryNdubuaku/maths-cs-ai-compendium: A comprehensive resource collection covering math, CS, and AI fundamentals..
+Shubhamsaboo/awesome-llm-apps. Shubhamsaboo/awesome-llm-apps: A curated list of LLM-powered applications showcasing innovative use cases..
+
+ TechAI Stocks.
+Dow Jones Futures: Micron, Sandisk, Google Lead AI Sell-Off, Netflix Dives Late; SpaceX Starship Launch Scrubbed. Dow Jones futures fell as Micron, Sandisk, and Google led an AI sell-off, with Netflix diving late. SpaceX's Starship launch was scrubbed..
+Nova and Microchip Technology Shares Are Falling, What You Need To Know. Nova and Microchip Technology shares are falling amid market weakness in the tech sector..
+NXP Semiconductors and Broadcom Shares Plummet, What You Need To Know. NXP Semiconductors and Broadcom shares plummeted, reflecting broader chip sector declines..
+Lattice Semiconductor, AMD, and Qualcomm Shares Are Falling, What You Need To Know. Lattice Semiconductor, AMD, and Qualcomm shares are falling, continuing the chip sell-off..
+Semtech and Lam Research Shares Plummet, What You Need To Know. Semtech and Lam Research shares plummeted, adding to the tech sector's losses..
+Why AtaiBeckley Stock Soared Today. AtaiBeckley stock soared today due to positive developments in its psychedelic drug trials..
+Wall St ends lower as chip weakness offsets solid earnings, data. Wall Street ended lower as chip weakness offset strong earnings and economic data..
+Is IBM's Crash Really a Buying Opportunity?. IBM's crash may present a buying opportunity, given its strong fundamentals and AI potential..
+Meet the Company Supplying 56% of the World's AI Memory Chips. This company supplies 56% of the world's AI memory chips, dominating the market..
+1 Critical Reason to Buy Broadcom Stock on the Dip. Broadcom's dip is a critical buying opportunity due to its strong AI and networking business..
+
+ HuggingFace.
+NVIDIA Nemotron 3 Embed Ranks #1 Overall on RTEB, Advancing Agentic Retrieval. NVIDIA Nemotron 3 Embed ranks #1 on RTEB, advancing agentic retrieval with state-of-the-art performance..
+Newer Models, Same Advantage. Newer models maintain same advantage over predecessors in performance benchmarks..
+Security incident disclosure — July 2026. Security incident disclosure for July 2026 details breach response and mitigation steps..
+What building Shippy taught us about building agents. Building Shippy taught us key lessons about constructing effective AI agents..
+Model Routing Is Simple. Until It Isn’t.. Model routing seems simple but becomes complex with real-world constraints..
+Welcome Inkling by Thinking Machines. Welcome Inkling by Thinking Machines, a new AI research initiative..
+Introducing Real World VoiceEQ: Measuring the human quality of voice AI. Introducing Real World VoiceEQ to measure human quality of voice AI systems..
+Profiling in PyTorch (Part 3): Attention is all you profile. Profiling in PyTorch Part 3: Attention mechanisms are key to profiling..
+Native-speed vLLM transformers modeling backend. Native-speed vLLM transformers modeling backend for efficient inference..
+From Hugging Face to Amazon SageMaker Studio in one click. From Hugging Face to Amazon SageMaker Studio in one click for seamless deployment..
+Hugging Face Models on Foundry Managed Compute. Hugging Face Models on Foundry Managed Compute for scalable AI workloads..
+Run AI workloads on any cloud, store on Hugging Face: zero-egress storage with SkyPilot. Run AI workloads on any cloud, store on Hugging Face with zero-egress storage via SkyPilot..
+LeRobot v0.6.0: Imagine, Evaluate, Improve. LeRobot v0.6.0: Imagine, Evaluate, Improve for robotic learning advancements..
+PRX Part 4: Our Data Strategy. PRX Part 4: Our Data Strategy outlines data management and utilization plans..
+🤗 Kernels: Major Updates. 🤗 Kernels: Major Updates enhance performance and functionality..
+Hugging Face and Cerebras bring Gemma 4 to real-time voice AI. Hugging Face and Cerebras bring Gemma 4 to real-time voice AI applications..
+ScarfBench: Benchmarking AI Agents for Enterprise Java Framework Migration. ScarfBench benchmarks AI agents for enterprise Java framework migration..
+Why Specialization Is Inevitable. Why Specialization Is Inevitable in AI development and deployment..
+Featuring Every Eval Ever Results on Hugging Face Model Pages. Featuring Every Eval Ever Results on Hugging Face Model Pages for transparency..
+DiScoFormer: One transformer for density and score, across distributions. DiScoFormer: One transformer for density and score across distributions..
+
+ arXiv AI.
+OriginBlame: Record- and Token-Level Data Provenance for AI Training Datasets. OriginBlame: Record- and Token-Level Data Provenance for AI Training Datasets.
+SPINE: Bridging the Cyber-Physical Gap with Agentic AI. SPINE: Bridging the Cyber-Physical Gap with Agentic AI.
+Interventional Grounding Audits: Black-Box Premise-Dependency Tests for LLM Chain-of-Thought via Predicate Substitution. Interventional Grounding Audits: Black-Box Premise-Dependency Tests for LLM Chain-of-Thought via Predicate Substitution.
+Probabilistic Extension of Neuro-Symbolic AGI Robots based on Belnap's Typed Intensional FOL. Probabilistic Extension of Neuro-Symbolic AGI Robots based on Belnap's Typed Intensional FOL.
+Self-Improvements in Modern Agentic Systems: A Survey. Self-Improvements in Modern Agentic Systems: A Survey.
+Improving Molecular Property Prediction in Small Language Models Using Graph-based Tools. Improving Molecular Property Prediction in Small Language Models Using Graph-based Tools.
+Oracle Agent Memory as an Enterprise Memory Substrate for Long-Horizon AI Agents. Oracle Agent Memory as an Enterprise Memory Substrate for Long-Horizon AI Agents.
+Learning Safe Agent Behaviour from Human Preferences and Justifications via World Models. Learning Safe Agent Behaviour from Human Preferences and Justifications via World Models.
+CayleyR: Solving the TopSpin puzzle via cycle intersection. CayleyR: Solving the TopSpin puzzle via cycle intersection.
+Networked Intelligence: Active Shared Context Graphs for Human-AI Team Science. Networked Intelligence: Active Shared Context Graphs for Human-AI Team Science.
+AI-Native Insurance for Agentic AI: Pricing, Underwriting, and End-to-End Automation. AI-Native Insurance for Agentic AI: Pricing, Underwriting, and End-to-End Automation.
+Cost-Optimal Foundation Model Deployment Portfolio for Transportation Management. Cost-Optimal Foundation Model Deployment Portfolio for Transportation Management.
+Harness Handbook: Making Evolving Agent Harnesses Readable,Navigable, and Editable. Harness Handbook: Making Evolving Agent Harnesses Readable, Navigable, and Editable.
+Theory-Level Autoformalization: From Isolated Statements to Unified Formal Knowledge Bases. Theory-Level Autoformalization: From Isolated Statements to Unified Formal Knowledge Bases.
+EZSMT Version 3, Matured. EZSMT Version 3, Matured.
+Set-shifting Behavioral Test for Harnessed Agents. Set-shifting Behavioral Test for Harnessed Agents.
+LAPO: Leave-One-Turn Attribution for Self-Generated Process Rewards in Multi-Turn Search Reasoning. LAPO: Leave-One-Turn Attribution for Self-Generated Process Rewards in Multi-Turn Search Reasoning.
+How Far Can Root Cause Analysis Go on Real-World Telemetry Data?. How Far Can Root Cause Analysis Go on Real-World Telemetry Data?.
+Multi-Agent Collaborative Reasoning with Tool-Augmented Evidence for Urban Region Profiling. Multi-Agent Collaborative Reasoning with Tool-Augmented Evidence for Urban Region Profiling.
+AI advice suppresses people's willingness to say "I don't know", even when the advice is wrong and accuracy is incentivized. AI advice suppresses people's willingness to say "I don't know", even when the advice is wrong and accuracy is incentivized
