@@ -1,9 +1,14 @@
  Hacker News.
-AI Is a Tool. Using It Well Takes Skill..
+Leaving Tech.
+China Overtakes U.S. For First Time as Top Spender on R&D in 2024.
+Strengthening our defenses against distillation attacks.
+Blood cells from 80-year-old donor become stem cells with molecular age under 20.
+Show HN: An experimental pattern-first DAW that supports MCP.
+Janas: Run LLMs larger than RAM by streaming experts from SSD.
+AI is a tool and using it well takes skill.
 Phreak.ing – Internet Phone Switch.
-Show HN: Brickbrag – A multiplayer brick-building world in the browser.
-Epic Games tells employees to use AI to get Disney game done.
-Writing a Demoscene Intro for the ZX Spectrum.
+Intel D270 GPU AI Accelerator–Up to 480 GB LPDDR5X.
+Who is vfmaddrnd231pd?.
 
  GitHub Trending.
 morluto/rea.
@@ -11,13 +16,21 @@ boykopovar/AnyPS5.
 storytold/artcraft.
 cathrynlavery/diagram-design.
 bilawalsidhu/gods-eye-view.
+pytorch/pytorch.
+lyogavin/airllm.
+chrislgarry/Apollo-11.
 
  TechAI Stocks.
-Microsoft's AI chief on whether Maia 300 cuts its Nvidia dependence: 'Competition is good'.
-$10,000 Invested Equally in Alphabet and Nvidia Could Be Worth This Much by 2030.
-You Bought VOO to Own the S&P 500. On $500,000, One Chipmaker Is $40,400 of It.
-Palantir’s Pentagon role reveals a surprising edge.
-Navitas shares surge 5% on Nvidia AI infrastructure partnership.
+Dow Jones Futures: Micron, Nvidia Lead AI Trade Lower; Apple, Meta Rally Near Buy Points.
+Amazon.com vs. Alibaba: Which Consumer Stock Is a Better Buy in 2026?.
+Broadcom CEO follows a proven blueprint for labs buying its chips.
+Microsoft Now Has 3 Generations of Its Own AI Chips. Nvidia Is Still the Chip Stock to Buy..
+SNDK, MU, INTC, AMD, SKHY: Chip Stocks Extend Slide As AI Funding Concerns, China Competition Weigh On Sector.
+Why Meta (META) Stock Is Up Today.
+Microsoft Sues JLL For Protection Against Lawsuit At NYC Office Project.
+Alphabet vs. Meta Platforms: Which Stock Is a Better Buy in 2026?.
+Nvidia’s 'Reflection' move could put customers on edge.
+Why Harmony Biosciences Stock Got Mashed on Monday.
 
  HuggingFace.
 Impactful scheduling for GPU clusters.
@@ -28,6 +41,18 @@ One Model Family, Two Gold-Level Results: Fine-Tuning Nemotron for IOI and IMO.
 The Agent Said It Was Done. The Database Disagreed..
 AutoSynthData: Generating Training Data for Enterprise Agents.
 Open TTS Leaderboard: Scalable Evaluation for Multilingual Text-to-Speech and Voice Cloning.
+Getting the Source Right, Not Just the Fact: Source-Aware Verification for MCP Agents.
+Holo4: powering generalist computer-use agents.
+Welcome RL Environments to the hub.
+How UK AISI and EvalEval Are Making Benchmark Results Reproducible.
+Transformers now runs llama.cpp quants.
+Jun Kim, oMLX creator and maintainer, joins Hugging Face to support the MLX community.
+tokenizers v1: encode, decode and scaling, measured.
+Your Agent Aced the Task. Will It Do It Again?.
+Async GRPO with LoRA across HF Jobs: a bucket, a proxy, and no NCCL.
+Rebuilding AUTOMATIC1111 with Gradio Workflow.
+NeoMME: an efficient Multimodal-native and Multilingual Encoder.
+Fine-tuning a 350M Model for Better Structured Outputs in 100 GRPO Steps.
 
  arXiv AI.
 Faithfulness Without Anchors: A Position Paper on the Structural Misalignments of Explainable AI Faithfulness Metrics for Feature Importance.
@@ -37,4 +62,16 @@ Know What You Don't Know: Agentic Data Synthesis by Evolving Generation Space fo
 SpireBench: Evaluating Long-Horizon Strategic Play of Agentic Models with Slay the Spire.
 Beyond Binary Verifiable Rewards: Behavioral Self-Rewarding for SWE Agents.
 CLEAT: Learning Value-Guided Clarification for Interactive Agents.
-MagicBeanStalk: Escaping the RLVR Zero Advantage Trap with Recursive Data Synthesis
+MagicBeanStalk: Escaping the RLVR Zero Advantage Trap with Recursive Data Synthesis.
+Faithful and Complete LLM-Assisted Automated Construction of Hierarchical Hardware Knowledge Graphs.
+Representation Alignment from a Few Paired Data via Distilled Optimal Transport.
+EvoBelief: Falsifiable World Models for Self-Improving LLM Agents.
+VEPA: Verified Evolving Formal Policy for Lifelong LLM Agent Guardrails.
+Reward Hacking as a Transmissible Strategy in Multi-Agent Coding Systems.
+Neural networks are more modular than single neurons suggest.
+Towards Defining, Measuring, and Leveraging Creativity in AI Applications.
+Mitigating Capability Degradation in LLM Self-Improvement via Representation Geometry Regularization.
+Collaborative Theory of Mind: Learning to Self-Revise by Anticipating User Responses.
+One-Step Text Generation by Seq-Drifting.
+Mind the Spatial Gap: A Benchmark for Geospatial Reasoning and Constrained Spatial Editing.
+OGPO: Offline Goal-conditioned Policy Optimization for Recoverable Vision-Language-Action Models
